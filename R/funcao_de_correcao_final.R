@@ -10,6 +10,7 @@
 #' \item{B(θ)}{The second-order bias vector of theta in matrix format.}
 #' \item{θ_BC}{The corrected matrix θ_BC.}
 #' \item{Função Score Corrigida}{The corrected Score function, which is derived from the logarithm of the likelihood function.}
+#'
 #' @export
 
 fCoxSnell <- function(X, Y) {
@@ -278,3 +279,4 @@ fCoxSnell <- function(X, Y) {
   cat("Função Score Corrigida:\n")
   print(format(U_theta_f, justify = "right"), quote = FALSE)
 }
+

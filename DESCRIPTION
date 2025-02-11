@@ -1,13 +1,13 @@
 Package: DirichletCorrection
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Correction function in estimation in multivariate Dirichlet regressions.
 Version: 0.1.0
 Authors@R: c(
     person(
-      "Jane", "Doe",
-      email = "jane@example.com",
+      "Marea", "Cunha",
+      email = "mareachie@gmail.com",
       role = c("aut", "cre")
-    )
+      )
   )
 Description: More about what it does (maybe more than one line).
     Continuation lines should be indented.
