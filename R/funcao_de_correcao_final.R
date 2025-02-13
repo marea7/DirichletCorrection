@@ -44,7 +44,7 @@ fCoxSnell <- function(X, Y) {
   beta_inicial <- matrix(0, nrow = k, ncol = p)  # Inicializar beta
   for (j in 1:p) {
     log_alpha_j <- log(alpha_inicial[,j]) # Log de alpha para o j-ésimo componente
-    beta_inicial[, j] <- solve(t(X_dado) %*% X_dado) %*% t(X_dado) %*% log_alpha_j
+    beta_inicial[, j] <- solve(t(X) %*% X) %*% t(X) %*% log_alpha_j
   }
 
   beta_vetor <- as.vector(beta_inicial)  # Transformar em vetor 1D para o optim
@@ -52,7 +52,7 @@ fCoxSnell <- function(X, Y) {
   ## função log-vero do modelo
   log_likelihood_dirichlet <- function(beta_vetor, Y, X) {
     beta_inicial <- matrix(beta_vetor, nrow = k, ncol = p)
-    eta <- X_dado %*% beta_inicial
+    eta <- X %*% beta_inicial
     alfas_teste <- exp(eta)
     n <- nrow(Y)
     log_likelihood <- 0
@@ -69,7 +69,7 @@ fCoxSnell <- function(X, Y) {
   ## Calcular alfas e betas estimados:
 
   #Valor da função objetivo no ponto inicial
-  f_x0 <- log_likelihood_dirichlet(beta_vetor, Y, X_dado)
+  f_x0 <- log_likelihood_dirichlet(beta_vetor, Y, X)
 
   #Precisão da máquina
   epsilon <- .Machine$double.eps  # Aproximadamente 1.1e-16
@@ -89,7 +89,7 @@ fCoxSnell <- function(X, Y) {
     par = beta_vetor,
     fn = log_likelihood_dirichlet,
     Y = Y,
-    X = X_dado,
+    X = X,
     method = "L-BFGS-B",
     control = list(factr = factr, pgtol = pgtol, maxit = maxit)
   )
@@ -99,7 +99,7 @@ fCoxSnell <- function(X, Y) {
   print(format(betas, justify = "right"), quote = FALSE)
 
   # Considerando que:
-  galfa = X_dado %*% betas
+  galfa = X %*% betas
   alfas_estim = exp(galfa)
   # então:
   g_alfa <- galfa                 # ou, equivalentemente, log(alfas_estim)
@@ -115,7 +115,7 @@ fCoxSnell <- function(X, Y) {
   C
 
   I_p <- diag(p)
-  Kron_prod <- kronecker(I_p, X_dado)
+  Kron_prod <- kronecker(I_p, X)
 
   k_teta <- matrix(0, nrow = k*p, ncol = k*p)
   w <- array(0, dim = c(p, p, n))
@@ -137,7 +137,7 @@ fCoxSnell <- function(X, Y) {
                 psi(1, sum(alfas_estim[i,]))
             }
           }
-          k_teta[r,s] <- (X_dado[,u] * w[a,b,]) %*% X_dado[,v]
+          k_teta[r,s] <- (X[,u] * w[a,b,]) %*% X[,v]
         }
       }
     }
@@ -229,7 +229,7 @@ fCoxSnell <- function(X, Y) {
                     g_alfa_derivado[i, c] * psi(2, sum(alfas_estim[i,]))
                 }
               }
-              mrts[r,s,t] = t(X_dado[,v] * X_dado[,u] * delta[b,a,c,]) %*% X_dado[,z] - (0.5*t(X_dado[,z] * X_dado[,v] * f[c,b,a,]) %*% X_dado[,u])
+              mrts[r,s,t] = t(X[,v] * X[,u] * delta[b,a,c,]) %*% X[,z] - (0.5*t(X[,z] * X[,v] * f[c,b,a,]) %*% X[,u])
             }
           }
         }
@@ -269,7 +269,7 @@ fCoxSnell <- function(X, Y) {
   cat("θ_BC:\n")
   print(format(teta_bc, justify = "right"), quote = FALSE)
 
-  U_theta <- as.vector(t(X_dado) %*% C)
+  U_theta <- as.vector(t(X) %*% C)
 
   #função score corrigida
   U_theta_f1 <- U_theta - (k_teta %*% b_teta)
@@ -279,4 +279,3 @@ fCoxSnell <- function(X, Y) {
   cat("Função Score Corrigida:\n")
   print(format(U_theta_f, justify = "right"), quote = FALSE)
 }
-
