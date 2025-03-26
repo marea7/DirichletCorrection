@@ -95,8 +95,6 @@ fCoxSnell <- function(X, Y) {
   )
   betas <- resultado$par
   betas <- matrix(betas, nrow = k, ncol = p)
-  cat("Betas:\n")
-  print(format(betas, justify = "right"), quote = FALSE)
 
   # Considerando que:
   galfa = X %*% betas
@@ -256,18 +254,12 @@ fCoxSnell <- function(X, Y) {
 
   inverta <- solve(k_teta) #K_teta e INVERSA ESTÃO CERTAS
   erro_padrao <- sqrt(diag(inverta))
-  cat("Erro Padrão:\n")
-  print(format(erro_padrao, justify = "right"), quote = FALSE)
 
   b_teta <- inverta %*% mrts %*% as.vector(inverta)
-  cat("B(θ):\n")
-  print(format(b_teta, justify = "right"), quote = FALSE)
 
   teta_chapeu <- c(betas[,1], betas[,2], betas[,3], betas[,4])
 
   teta_bc = teta_chapeu - b_teta
-  cat("θ_BC:\n")
-  print(format(teta_bc, justify = "right"), quote = FALSE)
 
   U_theta <- as.vector(t(X) %*% C)
 
@@ -276,6 +268,10 @@ fCoxSnell <- function(X, Y) {
   #ou
   U_theta_f <- U_theta - mrts %*% as.vector(inverta)
   #São iguais
-  cat("Função Score Corrigida:\n")
-  print(format(U_theta_f, justify = "right"), quote = FALSE)
-}
+  return(list(
+    "Betas" = betas,
+    "B(θ)" = b_teta,
+    "θ_BC" = teta_bc,
+    "Erro Padrao" = erro_padrao,
+    "Funcao Score Corrigida" = U_theta_f))
+    }
