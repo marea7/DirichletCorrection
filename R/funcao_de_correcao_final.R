@@ -9,7 +9,7 @@
 #' \item{Erro Padrão}{The values of the standard error.}
 #' \item{B(θ)}{The second-order bias vector of theta in matrix format.}
 #' \item{θ_BC}{The corrected matrix θ_BC.}
-#' \item{Função Score Corrigida}{The corrected Score function, which is derived from the logarithm of the likelihood function.}
+#' \item{Função Score Modificada}{The corrected Score function, which is derived from the logarithm of the likelihood function.}
 #'
 #' @export
 
@@ -263,7 +263,7 @@ fCoxSnell <- function(X, Y) {
 
   U_theta <- as.vector(t(X) %*% C)
 
-  #função score corrigida
+  #função score Modificada
   U_theta_f1 <- U_theta - (k_teta %*% b_teta)
   #ou
   U_theta_f <- U_theta - mrts %*% as.vector(inverta)
@@ -273,5 +273,5 @@ fCoxSnell <- function(X, Y) {
     "B(θ)" = b_teta,
     "θ_BC" = teta_bc,
     "Erro Padrao" = erro_padrao,
-    "Funcao Score Corrigida" = U_theta_f))
+    "Funcao Score Modificada" = U_theta_f))
     }
