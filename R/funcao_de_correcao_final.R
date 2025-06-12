@@ -9,7 +9,7 @@
 #' \item{Erro Padrão}{The values of the standard error.}
 #' \item{B(θ)}{The second-order bias vector of theta in matrix format.}
 #' \item{θ_BC}{The corrected matrix θ_BC.}
-#' \item{Função Score Modificada}{The corrected Score function, which is derived from the logarithm of the likelihood function.}
+#' \item{Função Score Modificada}{The modified Score function, which is derived from the logarithm of the likelihood function.}
 #'
 #' @export
 
