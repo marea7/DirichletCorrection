@@ -8,12 +8,12 @@
 #' \item{Betas}{The values of the beta matrix without correction.}
 #' \item{Erro Padrão}{The values of the standard error.}
 #' \item{B(θ)}{The second-order bias vector of theta in matrix format.}
-#' \item{θ_BC}{The corrected matrix θ_BC.}
+#' \item{Betas Corrigidos}{Matrix with estimates of the bias correction of θ.}
 #' \item{Função Score Modificada}{The modified Score function, which is derived from the logarithm of the likelihood function.}
 #'
 #' @export
 
-fCoxSnell <- function(X, Y) {
+dirichletBiasCorrection <- function(X, Y) {
   set.seed(1992)
   library(pracma)
 
@@ -259,7 +259,7 @@ fCoxSnell <- function(X, Y) {
 
   teta_chapeu <- c(betas[,1], betas[,2], betas[,3], betas[,4])
 
-  teta_bc = teta_chapeu - b_teta
+  teta_bc = matrix(teta_chapeu - b_teta,nrow = k, ncol = p)
 
   U_theta <- as.vector(t(X) %*% C)
 
@@ -270,8 +270,8 @@ fCoxSnell <- function(X, Y) {
   #São iguais
   return(list(
     "Betas" = betas,
-    "B(θ)" = b_teta,
-    "θ_BC" = teta_bc,
-    "Erro Padrao" = erro_padrao,
+    "B(θ)" = matrix(b_teta,,nrow = k, ncol = p),
+    "Betas Corrigidos" = teta_bc,
+    "Erro Padrao" = matrix(erro_padrao,,nrow = k, ncol = p),
     "Funcao Score Modificada" = U_theta_f))
     }
