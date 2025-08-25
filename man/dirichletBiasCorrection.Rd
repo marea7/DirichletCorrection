@@ -13,12 +13,11 @@ dirichletBiasCorrection(X, Y)
 }
 \value{
 A list containing:
-\item{Betas}{The values of the beta matrix without correction.}
-\item{Erro Padrão}{The values of the standard error.}
-\item{B(θ)}{The second-order bias vector of theta in matrix format.}
-\item{Betas Corrigidos}{Matrix with estimates of the bias correction of θ.}
-\item{Função Score Modificada}{The modified Score function, which is derived from the logarithm of the likelihood function.}
-}
+\item{Estimates}{The values of the beta matrix without correction.}
+\item{Standard Errors}{The values of the standard error.}
+\item{Bias B(θ)}{The second-order bias vector of theta in matrix format.}
+\item{Bias-Corrected Estimates}{Matrix with estimates of the bias correction of θ.}
+
 \description{
 Function to calculate the improved estimate in multivariate Dirichlet regressions, based on Melo et al. (2020).
 }
