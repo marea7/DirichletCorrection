@@ -5,11 +5,10 @@
 #' @param X It is the n*k model matrix with the observations in k known covariates
 #' @param Y It is a random p-vector that has a Dirichlet distribution(λ).
 #' @return A list containing:
-#' \item{Betas}{The values of the beta matrix without correction.}
-#' \item{Erro Padrão}{The values of the standard error.}
-#' \item{B(θ)}{The second-order bias vector of theta in matrix format.}
-#' \item{Betas Corrigidos}{Matrix with estimates of the bias correction of θ.}
-#' \item{Função Score Modificada}{The modified Score function, which is derived from the logarithm of the likelihood function.}
+#' \item{Estimates}{The values of the beta matrix without correction.}
+#' \item{Standard Errors}{The values of the standard error.}
+#' \item{Bias B(θ)}{The second-order bias vector of theta in matrix format.}
+#' \item{Bias-Corrected Estimates}{Matrix with estimates of the bias correction of θ.}
 #'
 #' @export
 
@@ -272,6 +271,6 @@ dirichletBiasCorrection <- function(X, Y) {
     "Betas" = betas,
     "B(θ)" = matrix(b_teta,,nrow = k, ncol = p),
     "Betas Corrigidos" = teta_bc,
-    "Erro Padrao" = matrix(erro_padrao,,nrow = k, ncol = p),
-    "Funcao Score Modificada" = U_theta_f))
+    "Erro Padrao" = matrix(erro_padrao,,nrow = k, ncol = p))
+  )
     }
