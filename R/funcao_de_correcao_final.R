@@ -268,9 +268,9 @@ dirichletBiasCorrection <- function(X, Y) {
   U_theta_f <- U_theta - mrts %*% as.vector(inverta)
   #São iguais
   return(list(
-    "Betas" = betas,
-    "B(θ)" = matrix(b_teta,,nrow = k, ncol = p),
-    "Betas Corrigidos" = teta_bc,
-    "Erro Padrao" = matrix(erro_padrao,,nrow = k, ncol = p))
+    "Estimates" = betas,
+    "Bias B(θ)" = matrix(b_teta,,nrow = k, ncol = p),
+    "Bias-Corrected Estimates" = teta_bc,
+    "Standard Errors" = matrix(erro_padrao,,nrow = k, ncol = p))
   )
     }
